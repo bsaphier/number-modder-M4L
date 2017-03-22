@@ -9,6 +9,7 @@ var STEP    = 127 / MAX_KPH; // the number of MIDI "ticks" per unit
 
 var prevNormToMaxKPH;
 
+
 // "parse" the input
 function msg_float (num) {
 
@@ -25,12 +26,11 @@ function msg_float (num) {
   }
 }
 
+
 // modulate the input number
 function modulate (num) {
 
   var _normalToMaxKPH = num / this.STEP;
-
-  post(num, '\n');
 
   // round the float to nearest integer
   var normalToMaxKPH = ((_normalToMaxKPH % 1 > 0.5)
@@ -42,6 +42,7 @@ function modulate (num) {
 
   outlet(0, deltaSpeedPercentage);    // output to pitch-bend module
 
+  // check if the unit has changed
   if (this.prevNormToMaxKPH !== normalToMaxKPH) {
     this.prevNormToMaxKPH = normalToMaxKPH;
     outlet(1, normalToMaxKPH);        // output to "speedometer"
