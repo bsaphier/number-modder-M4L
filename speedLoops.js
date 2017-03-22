@@ -21,7 +21,7 @@ function msg_float (num) {
     this.DELTA = num / 100;
   }
 
-  if (inlet === 3) {
+  if (inlet === 2) {
     this.MAX_KPH = num;
   }
 }
