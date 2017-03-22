@@ -4,8 +4,8 @@ outlets = 2;
 // ––––––––––––––––––––––––––––––––– \\
 
 var DELTA   = 1.45 / 100;    // percent of change per unit
-var MAX_KPH = 100;           // range of the "speedometer"
-var STEP    = 127 / MAX_KPH; // the number of MIDI "ticks" per unit
+var MAX_KPH = 30;            // range of the "speedometer"
+var STEP    = 128 / MAX_KPH; // the number of MIDI "ticks" per unit
 
 var prevNormToMaxKPH;
 
@@ -33,10 +33,11 @@ function modulate (num) {
   var _normalToMaxKPH = num / this.STEP;
 
   // round the float to nearest integer
-  var normalToMaxKPH = ((_normalToMaxKPH % 1 > 0.5)
-    ? _normalToMaxKPH - (_normalToMaxKPH % 1)
-    : _normalToMaxKPH + (1 - _normalToMaxKPH % 1))
-    - 1;
+  var normalToMaxKPH = _normalToMaxKPH % 1 === 0
+                        ? _normalToMaxKPH
+                        : _normalToMaxKPH % 1 > 0.5
+                          ? _normalToMaxKPH + (1 - _normalToMaxKPH % 1)
+                          : _normalToMaxKPH - (_normalToMaxKPH % 1);
 
   var deltaSpeedPercentage = normalToMaxKPH * DELTA;
 
